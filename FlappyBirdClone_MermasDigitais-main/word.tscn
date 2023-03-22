@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/personagem.png" type="Texture" id=1]
+[ext_resource path="res://assets/3_game_background.png" type="Texture" id=2]
+[ext_resource path="res://troncos.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15.625, 12.25 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.22917, 5.93751 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 28, 256 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 328, 12 )
+
+[node name="word" type="Node2D"]
+position = Vector2( 1, 1 )
+
+[node name="Fundo" type="Sprite" parent="."]
+position = Vector2( 531, 216 )
+scale = Vector2( 0.604167, 0.615741 )
+texture = ExtResource( 2 )
+
+[node name="Bat1" type="Sprite" parent="Fundo"]
+position = Vector2( 1047.72, -100.692 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 270.0
+margin_top = 14.0
+margin_right = 370.0
+margin_bottom = 94.0
+tab_size = 1
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 80, 80 )
+
+[node name="player" type="KinematicBody2D" parent="Node2D"]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/player"]
+position = Vector2( -3.625, -5.25 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Node2D/player"]
+position = Vector2( -2.99999, -5.00002 )
+scale = Vector2( 0.764706, 0.916668 )
+texture = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="Node2D/player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/player/Area2D"]
+position = Vector2( -3, -5 )
+scale = Vector2( 3, 2.2 )
+shape = SubResource( 2 )
+
+[node name="Area2D2" type="Area2D" parent="Node2D/player"]
+position = Vector2( 8, -8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/player/Area2D2"]
+position = Vector2( -112, 167 )
+shape = SubResource( 3 )
+
+[node name="Troncos" parent="." instance=ExtResource( 3 )]
+position = Vector2( 568, 248 )
+
+[node name="Troncos2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 696, 232 )
+
+[node name="Troncos3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 824, 256 )
+
+[node name="Troncos4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 928, 224 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="Cima" type="StaticBody2D" parent="."]
+position = Vector2( 311, -12 )
+
+[node name="Cima" type="CollisionShape2D" parent="Cima"]
+shape = SubResource( 4 )
+
+[node name="Terreno" type="Node2D" parent="."]
+
+[node name="Terreno" type="StaticBody2D" parent="Terreno"]
+
+[node name="Sprite" type="Sprite" parent="Terreno/Terreno"]
+position = Vector2( 450, 409 )
+
+[node name="Terreno" type="CollisionShape2D" parent="Terreno/Terreno"]
+position = Vector2( 307, 386 )
+shape = SubResource( 4 )
+
+[connection signal="area_entered" from="Node2D/player/Area2D" to="Node2D/player" method="_on_Area2D_area_entered"]
+[connection signal="body_entered" from="Node2D/player/Area2D" to="Node2D/player" method="_on_Area2D_body_entered"]
+[connection signal="area_entered" from="Node2D/player/Area2D2" to="Node2D/player" method="_on_Area2D2_area_entered"]
+[connection signal="body_entered" from="Node2D/player/Area2D2" to="Node2D/player" method="_on_Area2D2_body_entered"]
